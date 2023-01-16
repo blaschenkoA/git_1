@@ -15,8 +15,8 @@ def draw(screen):
 
     return text_x - 10, text_y - 10, text_w + 20, text_h + 20
 
-def clik(screen, d):
-    pygame.draw.circle(screen, (255, 255, 0), (400, 300), d)
+def clik(screen, d, r, g, b):
+    pygame.draw.circle(screen, (r, g, b), (400, 300), d)
 
 
 if __name__ == '__main__':
@@ -25,6 +25,7 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode(size)
     running = True
     circle = False
+    r, g, b = 0, 0, 0
     d = 0
 
     while running:
@@ -35,8 +36,9 @@ if __name__ == '__main__':
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x1, y1 = event.pos
                 if x <= x1 and x1 <= x + w and y <= y1 and y1 <= y + h:
+                    r, g, b = randrange(0, 255), randrange(0, 255), randrange(0, 255)
                     d = randrange(10, 200)
                     circle = True
         if circle:
-            clik(screen, d)
+            clik(screen, d, r, g ,b)
         pygame.display.flip()
