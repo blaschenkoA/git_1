@@ -1,15 +1,18 @@
 import sys
 
 import sqlite3
-from PyQt5 import uic
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
 
+from UI.main import Ui_MainWindow as main_ui
+from UI.creatEditCoffeeForm import Ui_Form as creat_ui
+from UI.addEditCoffeeForm import Ui_Form as add_ui
 
-class MyWidget(QMainWindow):
+
+class MyWidget(QMainWindow, main_ui):
     def __init__(self):
         super().__init__()
-        uic.loadUi('main.ui', self)
+        self.setupUi(self)
         self.result = [1]
         self.pixmap = QPixmap('data/coffee.jpg')
         self.image_l.setPixmap(self.pixmap)
@@ -39,10 +42,10 @@ class MyWidget(QMainWindow):
         self.add_c = CreatEditCoffeeForm(self, self.result[0])
         self.add_c.show()
 
-class CreatEditCoffeeForm(QWidget):
+class CreatEditCoffeeForm(QWidget, creat_ui):
     def __init__(self, *args):
         super().__init__()
-        uic.loadUi('creatEditCoffeeForm.ui', self)
+        self.setupUi(self)
         self.r_id = args[-1]
         self.print_id.setText(str(self.r_id))
         self.con = sqlite3.connect("data/coffee.db")
@@ -68,10 +71,10 @@ class CreatEditCoffeeForm(QWidget):
         self.con.commit()
 
 
-class AddEditCoffeeForm(QWidget):
+class AddEditCoffeeForm(QWidget, add_ui):
     def __init__(self, *args):
         super().__init__()
-        uic.loadUi('addEditCoffeeForm.ui', self)
+        self.setupUi(self)
         self.con = sqlite3.connect("data/coffee.db")
         self.btn_add.clicked.connect(self.add)
 
